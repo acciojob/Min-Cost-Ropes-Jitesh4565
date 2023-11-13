@@ -1,19 +1,29 @@
-function mincost(arr)
-{ 
-//write your code here
-// return the min cost
-  if(arr.length<2)
-  {
-	  return 0;
+function minCostToConnectRopes(ropes) {
+  // Ensure there are at least two ropes
+  if (ropes.length < 2) {
+    return 0;
   }
-	const totalCost=arr.reduce((accumulator,currentValue)=>{
-		arr.sort((a,b)=>a-b);
 
-		const combinedCost=arr[0]+arr[1];
-		arr.splice(0,2);
-		return accumulator+combinedCost;
-	},0);
-	return totalCost;
+  // Sort the array in ascending order
+  ropes.sort((a, b) => a - b);
+
+  // Using reduce to calculate the total cost of connecting ropes
+  const totalCost = ropes.reduce((accumulator, currentValue, index, array) => {
+    if (index + 1 < array.length) {
+      // Combine the two smallest ropes
+      const combinedCost = array[index] + array[index + 1];
+
+      // Update the next element in the array with the combined cost
+      array[index + 1] = combinedCost;
+
+      // Add the combined cost to the accumulator
+      return accumulator + combinedCost;
+    }
+
+    // If we're at the last element, return the accumulator
+    return accumulator;
+  }, 0);
+
+  return totalCost;
 }
-
-module.exports=mincost;
+module.exports= minCostToConnectRopes;
